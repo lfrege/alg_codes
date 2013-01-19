@@ -14,8 +14,6 @@ class charCounter
 		unsigned char ch2 = ch;
 		int m = (int) ch2;
 
-		std::cout << ch << "\t" << n << "\t" << ch2 << "\t" << m << std::endl; 
-
 		return m;
 	}
 
@@ -34,6 +32,11 @@ class charCounter
 		}
 	}
 
+	int getCount(char ch) const
+	{
+		return counts[charIndex(ch)];
+	}
+
 	charCounter()
 	{
 		int i;
@@ -44,5 +47,18 @@ class charCounter
 		}
 	}
 };
+
+std::ostream& operator<<(std::ostream& lhs,  const charCounter& rhs)
+{
+	int i;
+
+	for (i = 0; i < 256; i ++)
+	{
+		lhs << i << "\t" << rhs.getCount(i) << std::endl;
+	}
+
+	return lhs;
+}
+
 
 #endif

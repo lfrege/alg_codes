@@ -39,6 +39,6 @@ int main(int argc, char **argv)
 
 
 	cc1.countString(a);
-
+	cout << cc1 << endl;
 	return 0;
 }
