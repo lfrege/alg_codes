@@ -1,5 +1,6 @@
 #include <iostream>
 #include "charCounter.h"
+#include "bitStream.h"
 #include <fstream>
 
 using namespace std;

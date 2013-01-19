@@ -10,7 +10,6 @@ class charCounter
 
 	static int charIndex(char ch)
 	{
-		int n = (int) ch;
 		unsigned char ch2 = ch;
 		int m = (int) ch2;
 
