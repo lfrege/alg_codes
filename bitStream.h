@@ -62,9 +62,32 @@ class bitStream
 		return outbit;
 	}
 
+	void set(bool newbit)
+	{
+		char ch;
+
+		if (eof())
+		{
+			_data.resize(data().size() + 1);
+		}
+
+		if (newbit)
+		{
+			ch = 1 << bit();
+			_data[byte()] |= ch;
+		}
+		next();
+	}
+
 	void setData(const std::string& input)
 	{
 		_data = input;
+		start();
+	}
+
+	bitStream()
+	{
+		start();
 	}
 };
 

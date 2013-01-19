@@ -30,16 +30,27 @@ bool readAll(const string& filename, string& output)
 
 int main(int argc, char **argv)
 {
+	int i = 0;
 	string a;
 	charCounter cc1;
+	bitStream bs1, bs2;
 
-	if (!readAll(argv[1],a))
+	bs1.setData("A0a");
+
+	for (bs1.start(); !bs1.eof(); bs1.next())
 	{
-		cerr << "Error: could not read file." << endl;
+		cout << bs1.get();
+		bs2.set(bs1.get());
+		i++;
+
+		if (i % 8 == 0)
+		{
+			cout << endl;
+		}
 	}
 
+	cout << endl << bs2.data() << endl;
 
-	cc1.countString(a);
-	cout << cc1 << endl;
+
 	return 0;
 }
