@@ -1,5 +1,5 @@
 #include <iostream>
-#include "charCounter.h"
+#include "hTreeMaker.h"
 #include "bitStream.h"
 #include <fstream>
 
