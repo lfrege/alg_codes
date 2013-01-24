@@ -43,5 +43,9 @@ int main(int argc, char **argv)
 
 	htm.makeTreesFromCount(a);
 
+	cerr << "htm size: " << htm.size() << endl;
+
+	cout << htm[0].toString();
+
 	return 0;
 }

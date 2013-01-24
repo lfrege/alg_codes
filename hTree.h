@@ -42,7 +42,7 @@ class hTree
 
 		for (i = 0; i < (int)rows.size(); i++)
 		{
-			output += rows[i].toString();
+			output += rows[i].toString() + "\n";
 		}
 
 		return output;

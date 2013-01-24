@@ -12,30 +12,37 @@ class hTreeMaker
 	public:
 	void addTree(const std::string value, int weight) 
 	{
+		addTree(hTree(value, weight)); 
+	}
+
+	void addTree(const hTree& input) 
+	{
 		int i;
+		int weight = input.weight();
 		bool isset = false;
 		hTree temp, temp2;
 
-		for (i = start; i < size(); i++)
+		for (i = 0; i < size(); i++)
 		{
 			if (!isset)
 			{
-				if (weight < trees[i].weight())
+				if (weight < trees[start+i].weight())
 				{
-					temp = trees[i];
+					temp = trees[start+i];
+					trees[start+i] = input;
 					isset = true;
 				}
 			}
 			else
 			{
-				temp2 = trees[i];
-				trees[i] = temp;
+				temp2 = trees[start+i];
+				trees[start+i] = temp;
 				temp = temp2; 
 			}
 		}
 		if (!isset)
 		{
-			trees.push_back(hTree(value, weight));
+			trees.push_back(input);
 		}
 		else
 		{
@@ -53,6 +60,17 @@ class hTreeMaker
 		return trees[i+start];
 	}
 
+	void reduceTreeList()
+	{
+		hTree temp;
+		while (size() > 1)
+		{
+			temp = trees[start].merge(trees[start+1]);
+			start+=2;
+			addTree(temp);
+		}
+	}
+
 	void makeTreesFromCount(const std::string& input)
 	{
 		int i;
@@ -66,6 +84,8 @@ class hTreeMaker
 			buf[0] = i;
 			addTree(buf, cc1.getCount((char)i));
 		}
+
+		reduceTreeList();
 	}
 
 	hTreeMaker()
