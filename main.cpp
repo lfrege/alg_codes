@@ -30,27 +30,18 @@ bool readAll(const string& filename, string& output)
 
 int main(int argc, char **argv)
 {
-	int i = 0;
 	string a;
-	charCounter cc1;
-	bitStream bs1, bs2;
+	hTreeMaker htm;
 
-	bs1.setData("A0a");
-
-	for (bs1.start(); !bs1.eof(); bs1.next())
+	if (argc < 2)
 	{
-		cout << bs1.get();
-		bs2.set(bs1.get());
-		i++;
-
-		if (i % 8 == 0)
-		{
-			cout << endl;
-		}
+		cerr << "Error: please supply a file name" << endl;
+		return -1;
 	}
 
-	cout << endl << bs2.data() << endl;
+	readAll(argv[1], a);
 
+	htm.makeTreesFromCount(a);
 
 	return 0;
 }

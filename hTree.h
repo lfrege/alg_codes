@@ -19,9 +19,11 @@ class hTree
 			output = code + "\t";
 			output += value + "\t";
 			output += weight;
+
+			return output;
 		}
 
-		hTreeRow(const std::string& code, const std::string value1, int weight1)
+		hTreeRow(const std::string& code1, const std::string value1, int weight1)
 		{
 			code = code1;
 			value = value1;
@@ -66,6 +68,26 @@ class hTree
 	{
 		rows.push_back(hTreeRow("0" + code, value, weight));
 		_weight += weight;
+	}
+
+	hTree merge(const hTree& rhs) const
+	{
+		hTree output;
+		int i;
+		for (i = 0; i < size(); i++)
+		{
+			output.leftAdd(rows[i].code, rows[i].value, rows[i].weight);
+		}
+		for (i = 0; i < rhs.size(); i++)
+		{
+			output.rightAdd(rhs[i].code, rhs[i].value, rhs[i].weight);
+		}
+		return output;
+	}
+
+	const hTreeRow& operator[](int i) const
+	{
+		return rows[i];
 	}
 
 	hTree(const std::string input, int inweight)
