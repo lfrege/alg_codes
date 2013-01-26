@@ -97,8 +97,13 @@ class hTreeComp
 			code << bsi.get();
 			bsi.next();
 			comptree.search(low, high, code.str());
-			if (code.str().length() > 10)
+
+			if (i % 8 == 0)
 			{
+				std::cout << "key: " << code.str();
+				std::cout << "\tfound: " << comptree[low].code << std::endl;
+				low = 0;
+				high = 256;
 				code.str("");
 			}
 		}

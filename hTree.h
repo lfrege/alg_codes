@@ -42,19 +42,69 @@ class hTree
 		}
 	};
 
+	static void decPre(std::string& input)
+	{
+		int i;
+		for (i = input.length() - 1; i >= 0; i--)
+		{
+			if (input[i] == '1')
+			{
+				input[i] = '0';
+				return;
+			}
+			else if (input[i] == '0')
+			{
+				input[i] = '1';
+			}
+		}
+	}
+
+	static void incPre(std::string& input)
+	{
+		int i;
+		for (i = input.length() - 1; i >= 0; i--)
+		{
+			if (input[i] == '0')
+			{
+				input[i] = '1';
+				return;
+			}
+			else if (input[i] == '1')
+			{
+				input[i] = '0';
+			}
+		}
+	}
+
+	static bool isLowPre(const std::string& input)
+	{
+		int i;
+		for (i = 0; i < (int)input.length(); i++)
+		{
+			if (input[i] == '1') {return false;}
+		}
+		return true;
+	}
+
+	static bool isHighPre(const std::string& input)
+	{
+		int i;
+		for (i = 0; i < (int)input.length(); i++)
+		{
+			if (input[i] == '0') {return false;}
+		}
+		return true;
+	}
+
 	std::vector<hTreeRow> rows;
 	int _weight;
 
-	public:
-	void sort()
-	{
-		std::sort(rows.begin(), rows.end());
-	}
-
-	std::string search(int&low, int& high, const std::string& key)
+	void searchRange(int& low, int& high, const std::string& inkey)
 	{
 		int i;
 		int lastlow, lasthigh;
+		std::string lowkey = inkey;
+		std::string highkey = inkey;
 		if (low < 0) { low = 0;}
 		if (high >= (int)rows.size()) { high = rows.size() - 1; }
 		if (low == high) 
@@ -63,21 +113,81 @@ class hTree
 			high = rows.size() - 1; 
 		}
 
-		lastlow = low;
-		lasthigh = high;
-
-		while (lastlow != lasthigh && lastlow != lasthigh - 1)
+		if (isLowPre(inkey))
 		{
-			i = (lastlow + lasthigh) / 2;
+			low = 0;
+		}
+		else
+		{
+			decPre(lowkey);
+			lastlow = low;
+			lasthigh = high;
+			while (lastlow != lasthigh && lastlow != lasthigh - 1)
+			{
+				i = (lastlow + lasthigh) / 2;
+				if (lowkey == rows[i].code)
+				{
+					lastlow = lasthigh = i;
+				}
+				else if (lowkey < rows[i].code) { lasthigh = i; }
+				else if (lowkey > rows[i].code) { lastlow = i; }
+			}
+
+			low = i - 1;
+		}
+
+
+		if (isHighPre(inkey))
+		{
+			high = rows.size()-1;
+		}
+		else
+		{
+			incPre(highkey);
+			lastlow = low;
+			lasthigh = high;
+			while (lastlow != lasthigh && lastlow != lasthigh - 1)
+			{
+				i = (lastlow + lasthigh) / 2;
+				if (highkey == rows[i].code)
+				{
+					lastlow = lasthigh = i;
+				}
+				else if (highkey < rows[i].code) { lasthigh = i; }
+				else if (highkey > rows[i].code) { lastlow = i; }
+			}
+			high = i + 1;
+		}
+	}
+
+	public:
+	void sort()
+	{
+		std::sort(rows.begin(), rows.end());
+	}
+
+	std::string search(int& low, int& high, const std::string& key)
+	{
+		int i;
+		searchRange(low, high, key);
+
+		std::cout << "key: " << key  << " low: " << low << "\thigh: "<< high 
+			<< "\tlowcode: " << rows[low].code
+			<< "\thighcode: " << rows[high].code << std::endl;
+
+		if (high - low > 10)
+		{
+			return "";
+		}
+
+		for (i = low; i < high; i++)
+		{
 			if (key == rows[i].code)
 			{
-				low = high = i;
 				return rows[i].value;
 			}
-			else if (key < rows[i].code) { lasthigh = i; }
-			else if (key > rows[i].code) { lastlow = i; }
-			std::cout << "key: " << key  << " low: " << lastlow << "\thigh: "<< lasthigh << "\tcode: " << rows[i].code << std::endl;
 		}
+
 
 		return "";
 	}
