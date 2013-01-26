@@ -35,6 +35,20 @@ class hTree
 	int _weight;
 
 	public:
+	std::vector<std::string> buildReverseLookup() const
+	{
+		int i;
+		std::vector<std::string> output;
+		output.resize(256);
+
+		for (i = 0; i < (int)rows.size(); i++)
+		{
+			output[charCounter::charIndex(rows[i].value.c_str()[0])] = rows[i].code;
+		}
+
+		return output;
+	}
+
 	std::string toString() const
 	{
 		int i;

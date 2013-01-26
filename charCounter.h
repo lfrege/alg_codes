@@ -8,6 +8,12 @@ class charCounter
 {
 	std::vector<int> counts;
 
+	void inc(char ch)
+	{
+		counts[charIndex(ch)]++;
+	}
+
+	public:
 	static int charIndex(char ch)
 	{
 		unsigned char ch2 = ch;
@@ -16,12 +22,6 @@ class charCounter
 		return m;
 	}
 
-	void inc(char ch)
-	{
-		counts[charIndex(ch)]++;
-	}
-
-	public:
 	void countString(const std::string& input)
 	{
 		int i;

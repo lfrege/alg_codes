@@ -1,5 +1,5 @@
 #include <iostream>
-#include "hTreeMaker.h"
+#include "hTreeComp.h"
 #include "bitStream.h"
 #include <fstream>
 
@@ -31,7 +31,7 @@ bool readAll(const string& filename, string& output)
 int main(int argc, char **argv)
 {
 	string a;
-	hTreeMaker htm;
+	hTreeComp htc;
 
 	if (argc < 2)
 	{
@@ -41,11 +41,10 @@ int main(int argc, char **argv)
 
 	readAll(argv[1], a);
 
-	htm.makeTreesFromCount(a);
+	htc.makeTree(a);
 
-	cerr << "htm size: " << htm.size() << endl;
+	cout << htc.compress(a);
 
-	cout << htm[0].toString();
 
 	return 0;
 }
