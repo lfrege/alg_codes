@@ -70,6 +70,7 @@ class hTreeComp
 		int mode = 0;
 		std::stringstream convert, code;
 		bitStream bsi;
+		int low = 0; int high = 1000;
 
 		for (i = 0; i < (int)input.size() && start == -1; i++)
 		{
@@ -95,11 +96,15 @@ class hTreeComp
 		{
 			code << bsi.get();
 			bsi.next();
+			comptree.search(low, high, code.str());
+			if (code.str().length() > 10)
+			{
+				code.str("");
+			}
 		}
 
 		return "";
 	}
-
 };
 
 #endif

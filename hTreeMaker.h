@@ -86,6 +86,7 @@ class hTreeMaker
 		}
 
 		reduceTreeList();
+		trees[start].sort();
 	}
 
 	hTreeMaker()

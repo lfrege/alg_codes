@@ -1,5 +1,6 @@
 
 #include <vector>
+#include <algorithm>
 
 #ifndef LF_HTREE_H
 #define LF_HTREE_H
@@ -29,12 +30,58 @@ class hTree
 			value = value1;
 			weight = weight1;
 		}
+
+		bool operator<(const hTreeRow& rhs) const
+		{
+			return code < rhs.code;
+		}
+
+		bool operator==(const hTreeRow& rhs) const
+		{
+			return code == rhs.code;
+		}
 	};
 
 	std::vector<hTreeRow> rows;
 	int _weight;
 
 	public:
+	void sort()
+	{
+		std::sort(rows.begin(), rows.end());
+	}
+
+	std::string search(int&low, int& high, const std::string& key)
+	{
+		int i;
+		int lastlow, lasthigh;
+		if (low < 0) { low = 0;}
+		if (high >= (int)rows.size()) { high = rows.size() - 1; }
+		if (low == high) 
+		{
+			low = 0;
+			high = rows.size() - 1; 
+		}
+
+		lastlow = low;
+		lasthigh = high;
+
+		while (lastlow != lasthigh && lastlow != lasthigh - 1)
+		{
+			i = (lastlow + lasthigh) / 2;
+			if (key == rows[i].code)
+			{
+				low = high = i;
+				return rows[i].value;
+			}
+			else if (key < rows[i].code) { lasthigh = i; }
+			else if (key > rows[i].code) { lastlow = i; }
+			std::cout << "key: " << key  << " low: " << lastlow << "\thigh: "<< lasthigh << "\tcode: " << rows[i].code << std::endl;
+		}
+
+		return "";
+	}
+
 	std::vector<std::string> buildReverseLookup() const
 	{
 		int i;
@@ -118,5 +165,4 @@ class hTree
 
 
 #endif
-
 
