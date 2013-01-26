@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 
 	htc.makeTree(a);
 
-	cout << htc.compress(a);
+	cout << htc.decompress(a);
 
 
 	return 0;

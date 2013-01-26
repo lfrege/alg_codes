@@ -63,6 +63,43 @@ class hTreeComp
 
 		return output2;
 	}
+
+	std::string decompress(const std::string input)
+	{
+		int i, start = -1, dsize = 0;
+		int mode = 0;
+		std::stringstream convert, code;
+		bitStream bsi;
+
+		for (i = 0; i < (int)input.size() && start == -1; i++)
+		{
+			if (mode == 0 && input.c_str()[i] >= '0' && input.c_str()[i] <= '9')
+			{
+				mode = 1;
+			}
+			else if (mode == 1 && input.c_str()[i] == ' ')
+			{
+				mode = 2;
+				start = i + 1;
+			}
+		}
+
+		if (start == -1) { return ""; }
+
+		convert.str(input.substr(0, start));
+		convert >> dsize;
+
+		bsi.setData(input.substr(start, input.length()-start));
+
+		for (i = 0; i < dsize; i++)
+		{
+			code << bsi.get();
+			bsi.next();
+		}
+
+		return "";
+	}
+
 };
 
 #endif
