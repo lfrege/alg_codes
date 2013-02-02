@@ -64,11 +64,11 @@ class hTreeComp
 		return output2;
 	}
 
-	std::string decompress(const std::string input)
+	std::string decompress(const std::string& input) const
 	{
 		int i, start = -1, dsize = 0;
 		int mode = 0;
-		std::stringstream convert, code;
+		std::stringstream convert, code, output;
 		bitStream bsi;
 		int low = 0; int high = 1000;
 
@@ -98,17 +98,16 @@ class hTreeComp
 			bsi.next();
 			comptree.search(low, high, code.str());
 
-			if (i % 8 == 0)
+			if (low == high)
 			{
-				std::cout << "key: " << code.str();
-				std::cout << "\tfound: " << comptree[low].code << std::endl;
+				output << comptree[low].value;
 				low = 0;
 				high = 256;
 				code.str("");
 			}
 		}
 
-		return "";
+		return output.str();
 	}
 };
 

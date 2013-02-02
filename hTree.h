@@ -99,7 +99,7 @@ class hTree
 	std::vector<hTreeRow> rows;
 	int _weight;
 
-	void searchRange(int& low, int& high, const std::string& inkey)
+	void searchRange(int& low, int& high, const std::string& inkey) const
 	{
 		int i;
 		int lastlow, lasthigh;
@@ -119,7 +119,6 @@ class hTree
 		}
 		else
 		{
-			decPre(lowkey);
 			lastlow = low;
 			lasthigh = high;
 			while (lastlow != lasthigh && lastlow != lasthigh - 1)
@@ -166,24 +165,22 @@ class hTree
 		std::sort(rows.begin(), rows.end());
 	}
 
-	std::string search(int& low, int& high, const std::string& key)
+	std::string search(int& low, int& high, const std::string& key) const
 	{
 		int i;
 		searchRange(low, high, key);
-
-		std::cout << "key: " << key  << " low: " << low << "\thigh: "<< high 
-			<< "\tlowcode: " << rows[low].code
-			<< "\thighcode: " << rows[high].code << std::endl;
 
 		if (high - low > 10)
 		{
 			return "";
 		}
 
-		for (i = low; i < high; i++)
+		for (i = low; i <= high; i++)
 		{
 			if (key == rows[i].code)
 			{
+				low = i;
+				high = i;
 				return rows[i].value;
 			}
 		}

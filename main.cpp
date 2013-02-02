@@ -30,20 +30,28 @@ bool readAll(const string& filename, string& output)
 
 int main(int argc, char **argv)
 {
-	string a;
+	string a,b;
 	hTreeComp htc;
 
-	if (argc < 2)
+	if (argc < 3)
 	{
 		cerr << "Error: please supply a file name" << endl;
 		return -1;
 	}
 
-	readAll(argv[1], a);
+	readAll("main.cpp", b);
+	readAll(argv[2], a);
 
-	htc.makeTree(a);
+	htc.makeTree(b);
 
-	cout << htc.decompress(a);
+	if (argv[1][0] == 'd')
+	{
+		cout << htc.decompress(a);
+	}
+	else
+	{
+		cout << htc.compress(a);
+	}
 
 
 	return 0;
